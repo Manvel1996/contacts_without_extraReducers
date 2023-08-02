@@ -1,0 +1,47 @@
+@import "../../../MainVariables.scss";
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
+
+  &-content {
+    position: relative;
+    padding: 25px;
+    min-width: 250px;
+    background-color: rgb(255, 255, 255);
+    border-radius: $radius;
+    transform: scale(0.5);
+    transition: 0.4s all;
+    overflow-y: auto;
+    max-height: 80%;
+
+    &__close {
+      font-size: 2rem;
+      position: absolute;
+      cursor: pointer;
+      right: 10px;
+      top: 10px;
+    }
+  }
+
+  &--active {
+    pointer-events: all;
+    opacity: 1;
+    z-index: 2;
+    transform: scale(1);
+  }
+
+  &-content &--active {
+    transform: scale(1.1);
+  }
+}

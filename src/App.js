@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
 
-function App() {
+import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { useLocation } from "react-router-dom";
+
+// import { getMe } from "./redux/features/auth/AuthActions";
+
+import Layout from "./components/Layout";
+import AppRouter from "./components/AppRouter";
+
+import { ROUTE, AUTH_TOKEN } from "./constants";
+
+
+import "react-toastify/dist/ReactToastify.css";
+import "./App.scss";
+
+export default function App() {
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+
+  const currentUrl = location.pathname;
+
+  // useEffect(() => {
+  //   if (currentUrl !== ROUTE.LOGIN && currentUrl !== ROUTE.REGISTER && localStorage.getItem(AUTH_TOKEN)) {
+  //     dispatch(getMe());
+  //   }
+  // }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <AppRouter />
+      <ToastContainer position="bottom-right" autoClose={1000} />
+    </Layout>
   );
 }
-
-export default App;

@@ -1,0 +1,26 @@
+@import "../../../MainVariables.scss";
+
+.input-label{
+  display: block;
+}
+
+.input-info {
+  position: relative;
+
+  .input {
+    min-width: 200px;
+    width: 100%;
+    padding: 5px 15px;
+    margin-bottom: 20px;
+    border: 1px solid $color;
+    border-radius: $radius;
+    outline: none;
+  }
+
+  &__err {
+    bottom: 5px;
+    font-size: 10px;
+    color: red;
+    position: absolute;
+  }
+}

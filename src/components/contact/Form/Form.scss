@@ -1,0 +1,32 @@
+@import "../../../MainVariables.scss";
+
+.contact-form__image{
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+}
+
+.contact-form-selects {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.contact-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 120px;
+  gap: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .contact-form-selects {
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+    margin-bottom: 80px;
+  }
+}

@@ -1,0 +1,24 @@
+@import "../../../MainVariables.scss";
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  &-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  &-item {
+    list-style: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    display: none;
+  }
+}

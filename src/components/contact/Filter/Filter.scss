@@ -1,0 +1,13 @@
+.contacts-filter {
+    margin-bottom: 100px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .contacts-filter {
+      flex-direction: column;
+      padding: 10px;
+    }
+  }
+  
