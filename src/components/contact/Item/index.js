@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { ConfirmModal } from "../../UI";
 
-// import { getUserId, removeContact } from "../redux/features/auth/AuthActions";
+import { getUserId } from "../../../redux/selector/auth";
+import { setEditUser } from "../../../redux/slices/auth";
+
+import { useFetching } from "../../../hooks";
+
+import { removeContact } from "../../../Api";
 
 import { CONTACT_STATUS, AUTH_DEFAULT_IMG } from "../../../constants";
 
@@ -15,14 +20,14 @@ export default function Item({ contact, openModal, changeEditedContact }) {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
 
   const dispatch = useDispatch();
-  // const userId = useSelector(getUserId);
-  const userId = 5;
+  const userId = useSelector(getUserId);
 
   const id = contact?.id;
 
-  function confirmFunc() {
-    // dispatch(removeContact({ id, userId }));
-  }
+  const deleteContact = useFetching(async () => {
+    const response = await removeContact({ id, userId });
+    dispatch(setEditUser(response));
+  });
 
   function editContact(contact) {
     changeEditedContact(contact);
@@ -33,6 +38,7 @@ export default function Item({ contact, openModal, changeEditedContact }) {
     <div className="contact-item">
       <div className="contact-info">
         <img
+          alt="contact img"
           className="contact-info__img"
           src={contact.photoUrl ? contact.photoUrl : AUTH_DEFAULT_IMG}
         />
@@ -67,7 +73,7 @@ export default function Item({ contact, openModal, changeEditedContact }) {
         title="Are you sure you want to delete the contact?"
         visibleConfirm={visibleConfirm}
         setVisibleConfirm={setVisibleConfirm}
-        confirmFunc={confirmFunc}
+        confirmFunc={deleteContact}
       />
     </div>
   );

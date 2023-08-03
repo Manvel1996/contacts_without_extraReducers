@@ -4,7 +4,7 @@ import uuid from "react-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import {Input,Select} from "../../UI";
+import { Input, Select } from "../../UI";
 
 import {
   emailControl,
@@ -13,22 +13,27 @@ import {
   textControl,
 } from "../../../controllers";
 
-// import {
-//   addContact,
-//   getUserId,
-//   authStatus,
-//   getMe,
-//   editContact,
-//   getContactsGroups,
-// } from "../redux/features/auth/AuthActions";
+import {
+  getContactsGroups,
+  getStatus,
+  getUserId,
+} from "../../../redux/selector/auth";
+import { setUser, setEditUser } from "../../../redux/slices/auth";
+
+import { useFetching } from "../../../hooks";
+
+import { getMe, addContact, editContact } from "../../../Api";
 
 import {
   CONTACT_STATUS,
   CONTACT_GROUP,
   PHONE_START,
-  AUTH_DEFAULT_IMG
+  AUTH_DEFAULT_IMG,
+  VALID_EMAIL,
+  VALID_PHONE,
+  VALID_PHOTO_URL,
+  INPUT_ERR,
 } from "../../../constants";
-
 
 import "./Form.scss";
 
@@ -51,14 +56,34 @@ export default function Form({ closeModal, editedContact, visible }) {
   const [status, setStatus] = useState("");
   const [group, setGroup] = useState(CONTACT_GROUP.ALL);
 
-  // const userId = useSelector(getUserId);
-  // const statusState = useSelector(authStatus);
-  // const contactsGroups = useSelector(getContactsGroups);
-  const userId = 1;
-  const statusState = "";
-  const contactsGroups = [];
+  const userId = useSelector(getUserId);
+  const statusState = useSelector(getStatus);
+  const contactsGroups = useSelector(getContactsGroups);
 
   const dispatch = useDispatch();
+
+  const newContact = {
+    id: editedContact ? editedContact.id : uuid(),
+    userName,
+    surname,
+    email,
+    phone,
+    photoUrl,
+    status,
+    group,
+  };
+
+  const userInfo = useFetching(async () => {
+    const response = await getMe();
+    dispatch(setUser(response));
+  });
+
+  const changeContact = useFetching(async () => {
+    const response = editedContact
+      ? await editContact({ newContact, userId })
+      : await addContact({ newContact, userId });
+    dispatch(setEditUser(response));
+  });
 
   useEffect(() => {
     if (editedContact) {
@@ -86,33 +111,24 @@ export default function Form({ closeModal, editedContact, visible }) {
 
       if (
         editedContact?.email?.length > 0 &&
-        /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email) &&
+        VALID_EMAIL.test(email) &&
         email?.length < 30
       ) {
         setEmailErr(false);
       }
 
-      if (
-        /^[\+]?[(]?[0-9]{3}[)]?[\s]?[0-9]{2}[\s]?[0-9]{3}[\s]?[0-9]{3}$/.test(
-          phone
-        )
-      ) {
+      if (VALID_PHONE.test(phone)) {
         setPhoneErr(false);
       }
 
-      if (
-        photoUrl?.length > 0 &&
-        /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test(
-          photoUrl
-        )
-      ) {
+      if (photoUrl?.length > 0 && VALID_PHOTO_URL.test(photoUrl)) {
         setPhotoUrlErr(false);
       }
     } else clearForm();
 
     if (statusState) {
       toast(statusState, { toastId: 1 });
-      // dispatch(getMe());
+      userInfo();
     }
   }, [visible]);
 
@@ -144,26 +160,17 @@ export default function Form({ closeModal, editedContact, visible }) {
 
     if (
       email?.length === 0 ||
-      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email) ||
+      !VALID_EMAIL.test(email) ||
       email?.length >= 30
     ) {
       setEmailErr(true);
     }
 
-    if (
-      !/^[\+]?[(]?[0-9]{3}[)]?[\s]?[0-9]{2}[\s]?[0-9]{3}[\s]?[0-9]{3}$/.test(
-        phone
-      )
-    ) {
+    if (!VALID_PHONE.test(phone)) {
       setPhoneErr(true);
     }
 
-    if (
-      photoUrl?.length > 0 &&
-      !/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test(
-        photoUrl
-      )
-    ) {
+    if (photoUrl?.length > 0 && !VALID_PHOTO_URL.test(photoUrl)) {
       setPhotoUrlErr(true);
     }
 
@@ -173,35 +180,14 @@ export default function Form({ closeModal, editedContact, visible }) {
       surname?.length < 2 ||
       surname?.length > 20 ||
       email?.length === 0 ||
-      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email) ||
+      !VALID_EMAIL.test(email) ||
       email?.length >= 30 ||
-      !/^[\+]?[(]?[0-9]{3}[)]?[\s]?[0-9]{2}[\s]?[0-9]{3}[\s]?[0-9]{3}$/.test(
-        phone
-      ) ||
-      (photoUrl?.length > 0 &&
-        !/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test(
-          photoUrl
-        ))
+      !VALID_PHONE.test(phone) ||
+      (photoUrl?.length > 0 && !VALID_PHOTO_URL.test(photoUrl))
     )
       return;
 
-    const newContact = {
-      id: editedContact ? editedContact.id : uuid(),
-      userName,
-      surname,
-      email,
-      phone,
-      photoUrl,
-      status,
-      group,
-    };
-
-    // if (editedContact) {
-    //   dispatch(editContact({ newContact, userId }));
-    // } else {
-    //   dispatch(addContact({ newContact, userId }));
-    // }
-
+    changeContact();
     clearForm();
     closeModal();
   }
@@ -222,7 +208,7 @@ export default function Form({ closeModal, editedContact, visible }) {
         onChange={(e) => photoUrlControl(e, setPhotoUrl, setPhotoUrlErr)}
         value={photoUrl}
         err={photoUrlErr}
-        errText="The link should look like this https://photoUrl"
+        errText={INPUT_ERR.PHOTO_URL}
       />
 
       <Input
@@ -233,7 +219,7 @@ export default function Form({ closeModal, editedContact, visible }) {
         onChange={(e) => textControl(e, setUserName, setUserNameErr)}
         value={userName}
         err={userNameErr}
-        errText="The Name must contain at least 2 characters and no more than 20"
+        errText={INPUT_ERR.TEXT}
       />
 
       <Input
@@ -244,7 +230,7 @@ export default function Form({ closeModal, editedContact, visible }) {
         onChange={(e) => textControl(e, setSurname, setSurnameErr)}
         value={surname}
         err={surnameErr}
-        errText="The Surname must contain at least 2 characters and no more than 20"
+        errText={INPUT_ERR.TEXT}
       />
 
       <Input
@@ -255,7 +241,7 @@ export default function Form({ closeModal, editedContact, visible }) {
         onChange={(e) => emailControl(e, setEmail, setEmailErr)}
         value={email}
         err={emailErr}
-        errText="Invalid email address or more than 30 characters"
+        errText={INPUT_ERR.EMAIL}
       />
 
       <Input
@@ -266,7 +252,7 @@ export default function Form({ closeModal, editedContact, visible }) {
         onChange={(e) => phoneControl(e, setPhone, setPhoneErr)}
         value={phone}
         err={phoneErr}
-        errText={`Write this way ${PHONE_START} 44 444 444`}
+        errText={INPUT_ERR.PHONE}
       />
 
       <div className="contact-form-selects">

@@ -7,9 +7,9 @@ import "./Filter.scss";
 export default function Filter({
   contactsGroups,
   group,
+  changeGroup,
   search,
   setSearch,
-  changeGroup,
 }) {
   return (
     <div className="contacts-filter">

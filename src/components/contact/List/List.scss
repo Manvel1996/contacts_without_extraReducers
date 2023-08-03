@@ -1,14 +1,13 @@
 .contact-list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding-block: 50px;
-  
-    &__title {
-      margin-top: 50px;
-      color: white;
-    }
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding-block: 50px;
+
+  &__title {
+    margin-top: 50px;
+    color: white;
   }
-  
+}

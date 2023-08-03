@@ -54,6 +54,31 @@ export async function register({
   }
 }
 
+export async function login({ mailOrPhone, password }) {
+  const { data } = await axios.get(CURRENT_API);
+
+  const user = data?.filter(
+    (el) => el.phone === mailOrPhone || el.email === mailOrPhone
+  );
+
+  if (user?.length > 0) {
+    if (user[0]?._id) {
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        user[0].password
+      );
+
+      if (isPasswordCorrect) {
+        localStorage.setItem(AUTH_TOKEN, user[0]?._id);
+        return user[0];
+      }
+
+      return { message: "Incorrect login or password" };
+    }
+  }
+  return { message: "PLease register" };
+}
+
 export async function editUser({
   id,
   userName,
@@ -77,22 +102,21 @@ export async function editUser({
         hashedPassword = await bcrypt.hash(newPassword, 10);
       }
 
-      await axios.put(
-        CURRENT_API + "/" + id,
-        {
-          userName,
-          surname,
-          email,
-          phone,
-          password: hashedPassword ? hashedPassword : data.password,
-          photoUrl,
-          gender,
-          contacts,
-          groups: data.groups,
-        },
-      );
+      const success = await axios.put(CURRENT_API + "/" + id, {
+        userName,
+        surname,
+        email,
+        phone,
+        password: hashedPassword ? hashedPassword : data.password,
+        photoUrl,
+        gender,
+        contacts,
+        groups: data.groups,
+      });
 
-      return { message: "Change user success" };
+      if (success.status === 200) {
+        return { message: "Change user success" };
+      }
     }
 
     return { message: "Change user fail" };

@@ -6,13 +6,13 @@ import { toast } from "react-toastify";
 
 import { getStatus, getUser } from "../../../redux/selector/auth";
 import {
-  clearStatus,
+  setClearStatus,
   setUser,
   setNewUser,
   setEditUser,
 } from "../../../redux/slices/auth";
 
-import { editUser, getMe, register } from "../../../Api/user";
+import { editUser, getMe, register } from "../../../Api";
 
 import { Input, Select } from "../../UI";
 
@@ -22,6 +22,10 @@ import {
   AUTH_DEFAULT_IMG,
   ROUTE,
   PHONE_START,
+  VALID_EMAIL,
+  VALID_PHONE,
+  VALID_PHOTO_URL,
+  INPUT_ERR,
 } from "../../../constants";
 
 import {
@@ -32,7 +36,7 @@ import {
   textControl,
 } from "../../../controllers";
 
-import useFetching from "../../../hooks/useFetching";
+import { useFetching } from "../../../hooks";
 
 import "./Form.scss";
 
@@ -91,6 +95,22 @@ export default function AuthForm() {
     dispatch(setNewUser(response));
   });
 
+  const editedUser = useFetching(async () => {
+    const response = await editUser({
+      id: user?._id,
+      userName,
+      surname,
+      email,
+      phone,
+      password,
+      newPassword,
+      photoUrl,
+      gender,
+      contacts: user?.contacts,
+    });
+    dispatch(setEditUser(response));
+  });
+
   useEffect(() => {
     if (user && currentUrl === ROUTE.REGISTER) {
       if (status) {
@@ -99,7 +119,7 @@ export default function AuthForm() {
       navigate(ROUTE.HOME);
     } else if (!user && currentUrl === ROUTE.REGISTER && status) {
       toast(status, { toastId: 1 });
-      dispatch(clearStatus());
+      dispatch(setClearStatus());
     } else if (user && currentUrl === ROUTE.PROFILE) {
       setUserName(user?.userName);
       setSurname(user?.surname);
@@ -132,17 +152,13 @@ export default function AuthForm() {
 
     if (
       email?.length === 0 ||
-      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email) ||
+      !VALID_EMAIL.test(email) ||
       email?.length >= 30
     ) {
       setEmailErr(true);
     }
 
-    if (
-      !/^[\+]?[(]?[0-9]{3}[)]?[\s]?[0-9]{2}[\s]?[0-9]{3}[\s]?[0-9]{3}$/.test(
-        phone
-      )
-    ) {
+    if (!VALID_PHONE.test(phone)) {
       setPhoneErr(true);
     }
 
@@ -162,12 +178,7 @@ export default function AuthForm() {
       setRepeatPasswordErr(true);
     }
 
-    if (
-      photoUrl?.length > 0 &&
-      !/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test(
-        photoUrl
-      )
-    ) {
+    if (photoUrl?.length > 0 && !VALID_PHOTO_URL.test(photoUrl)) {
       setPhotoUrlErr(true);
     }
 
@@ -177,39 +188,19 @@ export default function AuthForm() {
       surname?.length < 2 ||
       surname?.length > 20 ||
       email?.length === 0 ||
-      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email) ||
+      !VALID_EMAIL.test(email) ||
       email?.length >= 30 ||
-      !/^[\+]?[(]?[0-9]{3}[)]?[\s]?[0-9]{2}[\s]?[0-9]{3}[\s]?[0-9]{3}$/.test(
-        phone
-      ) ||
+      !VALID_PHONE.test(phone) ||
       password?.length < 5 ||
       (user && newPassword?.length > 0 && newPassword?.length < 5) ||
       (!user && password !== repeatPassword) ||
       (user && newPassword !== repeatPassword) ||
-      (photoUrl?.length > 0 &&
-        !/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test(
-          photoUrl
-        ))
+      (photoUrl?.length > 0 && !VALID_PHOTO_URL.test(photoUrl))
     ) {
       return;
     }
 
-    user
-      ? dispatch(
-          editUser({
-            id: user?._id,
-            userName,
-            surname,
-            email,
-            phone,
-            password,
-            newPassword,
-            photoUrl,
-            gender,
-            contacts: user?.contacts,
-          })
-        )
-      : newUser();
+    user ? editedUser() : newUser();
 
     clearForm();
   }
@@ -252,7 +243,7 @@ export default function AuthForm() {
         onChange={(e) => photoUrlControl(e, setPhotoUrl, setPhotoUrlErr)}
         value={photoUrl}
         err={photoUrlErr}
-        errText="The link should look like this https://photoUrl"
+        errText={INPUT_ERR.PHOTO_URL}
       />
 
       <Input
@@ -263,7 +254,7 @@ export default function AuthForm() {
         onChange={(e) => textControl(e, setUserName, setUserNameErr)}
         value={userName}
         err={userNameErr}
-        errText="The Name must contain at least 2 characters and no more than 20"
+        errText={INPUT_ERR.TEXT}
       />
 
       <Input
@@ -274,7 +265,7 @@ export default function AuthForm() {
         onChange={(e) => textControl(e, setSurname, setSurnameErr)}
         value={surname}
         err={surnameErr}
-        errText="The Surname must contain at least 2 characters and no more than 20"
+        errText={INPUT_ERR.TEXT}
       />
 
       <Input
@@ -285,7 +276,7 @@ export default function AuthForm() {
         onChange={(e) => emailControl(e, setEmail, setEmailErr)}
         value={email}
         err={emailErr}
-        errText="Invalid email address or more than 30 characters"
+        errText={INPUT_ERR.EMAIL}
       />
 
       <Input
@@ -296,7 +287,7 @@ export default function AuthForm() {
         onChange={(e) => phoneControl(e, setPhone, setPhoneErr)}
         value={phone}
         err={phoneErr}
-        errText={`Write this way ${PHONE_START} 44 444 444`}
+        errText={INPUT_ERR.PHONE}
       />
 
       <Input
@@ -307,7 +298,7 @@ export default function AuthForm() {
         onChange={(e) => passwordControl(e, setPassword, setPasswordErr)}
         value={password}
         err={passwordErr}
-        errText="The password must contain at least 5 characters"
+        errText={INPUT_ERR.PASSWORD}
       />
 
       {user && (
@@ -326,7 +317,7 @@ export default function AuthForm() {
           }}
           value={newPassword}
           err={newPasswordErr}
-          errText="The new password must contain at least 5 characters"
+          errText={INPUT_ERR.NEW_PASSWORD}
         />
       )}
 
@@ -340,7 +331,7 @@ export default function AuthForm() {
         }
         value={repeatPassword}
         err={repeatPasswordErr}
-        errText="Password mismatch"
+        errText={INPUT_ERR.REPEAT_PASSWORD}
       />
 
       <Select

@@ -13,7 +13,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logOut: (state) => {
+    setLogOut: (state) => {
       state.user = null;
       state.token = null;
       state.isLoading = false;
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
       state.groups = [];
     },
 
-    clearStatus: (state) => {
+    setClearStatus: (state) => {
       state.status = null;
     },
 
@@ -53,6 +53,17 @@ export const authSlice = createSlice({
       state.groups = action.payload?.groups;
     },
 
+    setLoginUser: (state, action) => {
+      state.isLoading = false;
+      state.status = action.payload?._id
+        ? `Welcome ${action.payload?.userName}`
+        : action.payload?.message;
+      state.token = action.payload?._id ? action.payload?._id : null;
+      state.user = action.payload?._id ? action.payload : null;
+      state.contacts = action.payload?._id ? action.payload?.contacts : [];
+      state.groups = action.payload?._id ? action.payload?.groups : [];
+    },
+
     setNewUser: (state, action) => {
       state.isLoading = false;
       state.status = action.payload?._id
@@ -73,13 +84,14 @@ export const authSlice = createSlice({
 });
 
 export const {
-  logOut,
-  clearStatus,
+  setLogOut,
+  setClearStatus,
   setIsLoading,
   setPending,
   setError,
   setStatus,
   setUser,
+  setLoginUser,
   setNewUser,
   setEditUser,
 } = authSlice.actions;

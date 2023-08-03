@@ -10,8 +10,7 @@ export default function useFetching(callback) {
       dispatch(setPending());
       await callback();
     } catch (e) {
-      console.log(e);
-      dispatch(setError({ message: "Server error" }));
+      dispatch(setError(e));
     } finally {
       dispatch(setIsLoading(false));
     }

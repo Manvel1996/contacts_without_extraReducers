@@ -1,3 +1,5 @@
+import { VALID_EMAIL, VALID_PHONE, VALID_PHOTO_URL } from "../constants";
+
 export function textControl(e, setText, setTextErr) {
   setText(e.target.value.trim());
 
@@ -13,7 +15,7 @@ export function emailControl(e, setEmail, setEmailErr) {
   setEmail(e.target.value.trim());
 
   if (
-    /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(e.target.value.trim()) &&
+    VALID_EMAIL.test(e.target.value.trim()) &&
     e.target.value.trim()?.length < 30
   ) {
     setEmailErr(false);
@@ -23,11 +25,7 @@ export function emailControl(e, setEmail, setEmailErr) {
 export function phoneControl(e, setPhone, setPhoneErr) {
   setPhone(e.target.value.trimLeft());
 
-  if (
-    /^[\+]?[(]?[0-9]{3}[)]?[\s]?[0-9]{2}[\s]?[0-9]{3}[\s]?[0-9]{3}$/.test(
-      e.target.value.trimLeft()
-    )
-  ) {
+  if (VALID_PHONE.test(e.target.value.trimLeft())) {
     setPhoneErr(false);
   } else setPhoneErr(true);
 }
@@ -37,9 +35,7 @@ export function photoUrlControl(e, setPhotoUrl, setPhotoUrlErr) {
 
   if (
     e.target.value.trim()?.length === 0 ||
-    /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test(
-      e.target.value.trim()
-    )
+    VALID_PHOTO_URL.test(e.target.value.trim())
   ) {
     setPhotoUrlErr(false);
   } else setPhotoUrlErr(true);

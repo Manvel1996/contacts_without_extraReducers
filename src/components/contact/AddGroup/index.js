@@ -3,16 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-// import {
-//   addNewGroup,
-//   authStatus,
-//   getMe,
-//   getUserId,
-// } from "../redux/features/auth/AuthActions";
+import { getStatus, getUserId } from "../../../redux/selector/auth";
+import { setEditUser, setUser } from "../../../redux/slices/auth";
 
-import {Input} from "../../UI";
+import { Input } from "../../UI";
 
 import { textControl } from "../../../controllers";
+
+import { useFetching } from "../../../hooks";
+
+import { getMe, addNewGroup } from "../../../Api";
 
 import "./AddGroup.scss";
 
@@ -20,17 +20,27 @@ export default function AddGroup({ visible, closeModal }) {
   const [group, setGroup] = useState("");
   const [groupErr, setGroupErr] = useState(false);
 
-  // const userId = useSelector(getUserId);
-  // const statusState = useSelector(authStatus);
-  const userId = 1;
-  const statusState = "";
+  const userId = useSelector(getUserId);
+  const statusState = useSelector(getStatus);
 
   const dispatch = useDispatch();
+
+  const groupName = group.toUpperCase();
+
+  const userInfo = useFetching(async () => {
+    const response = await getMe();
+    dispatch(setUser(response));
+  });
+
+  const newGroup = useFetching(async () => {
+    const response = await addNewGroup({ groupName, userId });
+    dispatch(setEditUser(response));
+  });
 
   useEffect(() => {
     if (statusState) {
       toast(statusState, { toastId: 1 });
-      // dispatch(getMe());
+      userInfo();
     }
 
     setGroupErr(false);
@@ -43,10 +53,7 @@ export default function AddGroup({ visible, closeModal }) {
       return setGroupErr(true);
     }
 
-    const groupName = group.toUpperCase();
-
-    // dispatch(addNewGroup({ groupName, userId }));
-
+    newGroup();
     setGroup("");
     closeModal();
   }

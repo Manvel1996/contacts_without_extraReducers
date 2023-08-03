@@ -1,4 +1,4 @@
 export const BASE_URL =
-  "https://crudcrud.com/api/302f102bbfa145d3916cfc5b151b8aa1";
+  "https://crudcrud.com/api/7adee58ab718458983772a196c569e78";
 
 export const CURRENT_API = "auth";

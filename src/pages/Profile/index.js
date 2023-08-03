@@ -1,7 +1,13 @@
-import React from 'react'
+import React from "react";
+
+import AuthForm from "../../components/auth/Form";
+
+import "./Profile.scss";
 
 export default function Profile() {
   return (
-    <div>index</div>
-  )
+    <div className="profile">
+      <AuthForm />
+    </div>
+  );
 }

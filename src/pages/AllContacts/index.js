@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -7,10 +7,9 @@ import { Button, Modal, Pagination } from "../../components/UI";
 
 import { CONTACT_PAGE_GET_COUNT, CONTACT_GROUP } from "../../constants";
 
-// import {
-//   getContacts,
-//   getContactsGroups,
-// } from "../redux/features/auth/AuthActions";
+import { getContacts, getContactsGroups } from "../../redux/selector/auth";
+
+import { useContactsFilter, usePaginationSlice } from "../../hooks";
 
 import "./AllContacts.scss";
 
@@ -21,31 +20,13 @@ export default function AllContacts() {
   const [search, setSearch] = useState("");
   const [editedContact, setEditedContact] = useState(null);
 
-  //   const contactsGroups = useSelector(getContactsGroups);
-  const contactsGroups = [];
-  const contactsList = [];
+  const contactsGroups = useSelector(getContactsGroups);
+  const contactsList = useSelector(getContacts);
 
-  //   const contactsList = useSelector(getContacts)?.filter((el) => {
-  //     if (group === CONTACT_GROUP.ALL && search.trim()?.length === 0) {
-  //       return true;
-  //     } else if (el.group === group && search.trim()?.length === 0) {
-  //       return true;
-  //     } else if (
-  //       el.group === group &&
-  //       search.trim()?.length > 0 &&
-  //       (el.userName.toLowerCase().includes(search.trim().toLowerCase()) ||
-  //         el.surname.toLowerCase().includes(search.trim().toLowerCase()) ||
-  //         el.email.toLowerCase().includes(search.trim().toLowerCase()) ||
-  //         el.phone.toLowerCase().includes(search.trim().toLowerCase()))
-  //     ) {
-  //       return true;
-  //     }
-  //   });
-
-  const sliceStart = CONTACT_PAGE_GET_COUNT * (currentPage - 1);
-  const contactsListSlice = contactsList?.slice(
-    sliceStart,
-    sliceStart + CONTACT_PAGE_GET_COUNT
+  const filtredContactsList = useContactsFilter(contactsList, group, search);
+  const contactsListSlice = usePaginationSlice(
+    filtredContactsList,
+    currentPage
   );
 
   function changeGroup(value) {
@@ -70,6 +51,10 @@ export default function AllContacts() {
     setVisible(true);
   }
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
   return (
     <div className="all-contacts">
       <Filter
@@ -88,9 +73,9 @@ export default function AllContacts() {
         changeEditedContact={changeEditedContact}
       />
 
-      {contactsList?.length !== 0 && (
+      {filtredContactsList?.length !== 0 && (
         <Pagination
-          totalItems={contactsList?.length}
+          totalItems={filtredContactsList?.length}
           itemsPerPage={CONTACT_PAGE_GET_COUNT}
           pageChange={setCurrentPage}
           currentPage={currentPage}

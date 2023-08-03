@@ -1,0 +1,23 @@
+.contacts-group {
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-adders {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contacts-group {
+    padding: 10px;
+
+    &-adders {
+      gap: 10px;
+    }
+  }
+}

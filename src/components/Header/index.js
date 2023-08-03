@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 
-import {ConfirmModal, BurgerMenu, Navbar} from "../UI"
+import { ConfirmModal, BurgerMenu, Navbar } from "../UI";
 
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-
-// import { checkIsAuth } from "../redux/features/auth/AuthActions";
-// import { logOut } from "../redux/features/auth/AuthSlice";
+import { getLoggedIn } from "../../redux/selector/auth";
+import { setLogOut } from "../../redux/slices/auth";
 
 import { ROUTE, AUTH_TOKEN, ROUTE_PAGES } from "../../constants";
 
@@ -18,8 +17,8 @@ export default function Header() {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
 
-  //   const isAuth = useSelector(checkIsAuth);
-  const isAuth = true;
+  const isAuth = useSelector(getLoggedIn);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,7 +37,7 @@ export default function Header() {
   };
 
   function confirmFunc() {
-    // dispatch(logOut());
+    dispatch(setLogOut());
     localStorage.removeItem(AUTH_TOKEN);
     toast("Уou are logged out");
     navigate(ROUTE.LOGIN);
