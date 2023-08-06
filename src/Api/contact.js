@@ -3,7 +3,7 @@ import axios from "../utils/axios";
 import { CURRENT_API } from "../constants";
 
 export async function addContact({ newContact, userId }) {
-  const { data } = await axios.get(CURRENT_API + "/" + userId);
+  const { data } = await axios.get(CURRENT_API + userId);
 
   if (data) {
     const newUser = {
@@ -18,7 +18,7 @@ export async function addContact({ newContact, userId }) {
       groups: data.groups,
     };
 
-    const success = await axios.put(CURRENT_API + "/" + userId, newUser);
+    const success = await axios.put(CURRENT_API + userId, newUser);
     if (success.status === 200) {
       return { message: "Add contact success" };
     }
@@ -28,7 +28,7 @@ export async function addContact({ newContact, userId }) {
 }
 
 export async function editContact({ newContact, userId }) {
-  const { data } = await axios.get(CURRENT_API + "/" + userId);
+  const { data } = await axios.get(CURRENT_API + userId);
 
   const contacts = data?.contacts?.map((el) => {
     if (el.id === newContact.id) {
@@ -50,7 +50,7 @@ export async function editContact({ newContact, userId }) {
       groups: data.groups,
     };
 
-    const success = await axios.put(CURRENT_API + "/" + userId, newUser);
+    const success = await axios.put(CURRENT_API + userId, newUser);
 
     if (success.status === 200) {
       return { message: "Edit contact success" };
@@ -61,7 +61,7 @@ export async function editContact({ newContact, userId }) {
 }
 
 export async function removeContact({ id, userId }) {
-  const { data } = await axios.get(CURRENT_API + "/" + userId);
+  const { data } = await axios.get(CURRENT_API + userId);
 
   const contacts = data?.contacts?.filter((el) => el.id !== id);
 
@@ -78,7 +78,7 @@ export async function removeContact({ id, userId }) {
       groups: data.groups,
     };
 
-    const success = await axios.put(CURRENT_API + "/" + userId, newUser);
+    const success = await axios.put(CURRENT_API + userId, newUser);
 
     if (success.status === 200) {
       return { message: "Remove contact success" };
@@ -89,7 +89,7 @@ export async function removeContact({ id, userId }) {
 }
 
 export async function addNewGroup({ groupName, userId }) {
-  const { data } = await axios.get(CURRENT_API + "/" + userId);
+  const { data } = await axios.get(CURRENT_API + userId);
 
   if (data) {
     const newUser = {
@@ -104,7 +104,7 @@ export async function addNewGroup({ groupName, userId }) {
       groups: [...data.groups, groupName],
     };
 
-    const success = await axios.put(CURRENT_API + "/" + userId, newUser);
+    const success = await axios.put(CURRENT_API + userId, newUser);
 
     if (success.status === 200) {
       return { message: "Add group success" };

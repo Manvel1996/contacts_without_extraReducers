@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 
 import { Loader } from "./UI";
 
-import { privateRoutes, publishRoutes } from "../router";
+import { privateRoutes, publicRoutes } from "../router";
 
 import { ROUTE } from "../constants";
 
 import { getLoggedIn, getLoadingState } from "../redux/selector/auth";
+
+import { Error } from "../pages";
 
 export default function AppRouter() {
   const isAuth = useSelector(getLoggedIn);
@@ -30,16 +32,18 @@ export default function AppRouter() {
                 <Route
                   key={rout.path}
                   path={rout.path}
-                  element={<rout.element />}
+                  element={rout.element}
                 />
               ))
-            : publishRoutes.map((rout) => (
+            : publicRoutes.map((rout) => (
                 <Route
                   key={rout.path}
                   path={rout.path}
-                  element={<rout.element />}
+                  element={rout.element}
                 />
               ))}
+
+          <Route path="*" element={<Error />} />
         </Routes>
       )}
     </>

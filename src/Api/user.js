@@ -6,7 +6,7 @@ import { CURRENT_API, AUTH_TOKEN, CONTACT_GROUP } from "../constants";
 
 export async function getMe() {
   const { data } = await axios.get(
-    CURRENT_API + "/" + localStorage.getItem(AUTH_TOKEN)
+    CURRENT_API + localStorage.getItem(AUTH_TOKEN)
   );
 
   return data;
@@ -91,7 +91,7 @@ export async function editUser({
   gender,
   contacts,
 }) {
-  const { data } = await axios.get(CURRENT_API + "/" + id);
+  const { data } = await axios.get(CURRENT_API + id);
 
   if (data) {
     const isPasswordCorrect = await bcrypt.compare(password, data.password);
@@ -102,7 +102,7 @@ export async function editUser({
         hashedPassword = await bcrypt.hash(newPassword, 10);
       }
 
-      const success = await axios.put(CURRENT_API + "/" + id, {
+      const success = await axios.put(CURRENT_API + id, {
         userName,
         surname,
         email,

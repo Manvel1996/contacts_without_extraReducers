@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { getStatus, getUser } from "../../../redux/selector/auth";
@@ -72,7 +72,6 @@ export default function AuthForm() {
   const user = useSelector(getUser);
   const status = useSelector(getStatus);
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   const currentUrl = location.pathname;
@@ -112,11 +111,8 @@ export default function AuthForm() {
   });
 
   useEffect(() => {
-    if (user && currentUrl === ROUTE.REGISTER) {
-      if (status) {
-        toast(status, { toastId: 1 });
-      }
-      navigate(ROUTE.HOME);
+    if (user && currentUrl === ROUTE.REGISTER && status) {
+      toast(status, { toastId: 1 });
     } else if (!user && currentUrl === ROUTE.REGISTER && status) {
       toast(status, { toastId: 1 });
       dispatch(setClearStatus());

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { setClearStatus, setLoginUser } from "../../redux/slices/auth";
-import { getLoggedIn, getStatus } from "../../redux/selector/auth";
+import { getStatus } from "../../redux/selector/auth";
 
 import { Input } from "../../components/UI";
 
@@ -26,9 +26,6 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const status = useSelector(getStatus);
-  const isAuth = useSelector(getLoggedIn);
-
-  const navigate = useNavigate();
 
   const loginedUser = useFetching(async () => {
     const response = await login({
@@ -44,11 +41,7 @@ export default function Login() {
       toast(status, { toastId: 1 });
       dispatch(setClearStatus());
     }
-
-    if (isAuth) {
-      navigate(ROUTE.HOME);
-    }
-  }, [isAuth, dispatch, navigate, status]);
+  }, [dispatch, status]);
 
   function submit(e) {
     e.preventDefault();
