@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -9,7 +9,7 @@ import { CONTACT_PAGE_GET_COUNT } from "../../constants";
 
 import { getContacts } from "../../redux/selector/auth";
 
-import { useFavoriteContactsFilter, usePaginationSlice } from "../../hooks";
+import { favoriteContactsFilter, paginationSlice } from "../../utils";
 
 import "./Home.scss";
 
@@ -21,10 +21,13 @@ export default function Home() {
 
   const contactsList = useSelector(getContacts);
 
-  const favoriteContactsList = useFavoriteContactsFilter(contactsList, search);
-  const contactsListSlice = usePaginationSlice(
-    favoriteContactsList,
-    currentPage
+  const favoriteContactsList = useMemo(
+    () => favoriteContactsFilter(contactsList, search),
+    [contactsList, search]
+  );
+  const contactsListSlice = useMemo(
+    () => paginationSlice(favoriteContactsList, currentPage),
+    [favoriteContactsList, currentPage]
   );
 
   function pageChange(pageNumber) {

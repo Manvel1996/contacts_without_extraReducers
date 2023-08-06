@@ -11,7 +11,7 @@ import {
   phoneControl,
   photoUrlControl,
   textControl,
-} from "../../../controllers";
+} from "../../../utils";
 
 import {
   getContactsGroups,

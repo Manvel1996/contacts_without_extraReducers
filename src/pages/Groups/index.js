@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -9,7 +9,7 @@ import { CONTACT_PAGE_GET_COUNT, CONTACT_GROUP } from "../../constants";
 
 import { getContacts, getContactsGroups } from "../../redux/selector/auth";
 
-import { useContactsFilter, usePaginationSlice } from "../../hooks";
+import { contactsFilter, paginationSlice } from "../../utils";
 
 import "./Groups.scss";
 
@@ -26,11 +26,14 @@ export default function Groups() {
   const contactsGroups = useSelector(getContactsGroups);
   const contactsList = useSelector(getContacts);
 
-  const filtredContactsList = useContactsFilter(contactsList, group, search);
+  const filtredContactsList = useMemo(
+    () => contactsFilter(contactsList, group, search),
+    [contactsList, group, search]
+  );
 
-  const contactsListSlice = usePaginationSlice(
-    filtredContactsList,
-    currentPage
+  const contactsListSlice = useMemo(
+    () => paginationSlice(filtredContactsList, currentPage),
+    [filtredContactsList, currentPage]
   );
 
   function changeGroup(value) {

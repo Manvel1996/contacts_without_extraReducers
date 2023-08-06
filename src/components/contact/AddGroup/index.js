@@ -8,7 +8,7 @@ import { setEditUser, setUser } from "../../../redux/slices/auth";
 
 import { Input } from "../../UI";
 
-import { textControl } from "../../../controllers";
+import { textControl } from "../../../utils";
 
 import { useFetching } from "../../../hooks";
 
@@ -44,7 +44,7 @@ export default function AddGroup({ visible, closeModal }) {
     }
 
     setGroupErr(false);
-  }, [visible]);
+  }, [statusState, userInfo]);
 
   function submit(e) {
     e.preventDefault();
