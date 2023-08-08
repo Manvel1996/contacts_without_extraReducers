@@ -2,7 +2,7 @@ import React from "react";
 
 import { AiOutlineClose } from "react-icons/ai";
 
-import "./Modal.scss";
+import "./index.scss";
 
 export default function Modal({ children, visible, setVisible }) {
   return (

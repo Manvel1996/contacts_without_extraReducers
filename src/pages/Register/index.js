@@ -1,13 +1,13 @@
 import React from "react";
 
-import Form from "../../components/auth/Form";
+import RegisterForm from "../../components/auth/RegisterForm";
 
-import "./Register.scss";
+import "./index.scss";
 
 export default function Register() {
   return (
     <div className="register">
-      <Form />;
+      <RegisterForm/>;
     </div>
   );
 }

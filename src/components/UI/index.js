@@ -1,21 +1,9 @@
-import BurgerMenu from "./BurgerMenu";
-import Button from "./Button";
-import ConfirmModal from "./ConfirmModal";
-import Input from "./Input";
-import Loader from "./Loader";
-import Modal from "./Modal";
-import Navbar from "./Navbar";
-import Pagination from "./Pagination";
-import Select from "./Select";
-
-export {
-  BurgerMenu,
-  Button,
-  ConfirmModal,
-  Input,
-  Loader,
-  Modal,
-  Navbar,
-  Pagination,
-  Select,
-};
+export { default as BurgerMenu } from "./BurgerMenu";
+export { default as Button } from "./Button";
+export { default as ConfirmModal } from "./ConfirmModal";
+export { default as Input } from "./Input";
+export { default as Loader } from "./Loader";
+export { default as Modal } from "./Modal";
+export { default as Navbar } from "./Navbar";
+export { default as Pagination } from "./Pagination";
+export { default as Select } from "./Select";

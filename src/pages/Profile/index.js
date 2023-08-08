@@ -1,13 +1,13 @@
 import React from "react";
 
-import Form from "../../components/auth/Form";
+import ProfileForm from "../../components/auth/ProfileForm";
 
-import "./Profile.scss";
+import "./index.scss";
 
 export default function Profile() {
   return (
     <div className="profile">
-      <Form />
+      <ProfileForm />
     </div>
   );
 }

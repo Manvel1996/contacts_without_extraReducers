@@ -2,7 +2,7 @@ import React from "react";
 
 import { AiOutlineClose } from "react-icons/ai";
 
-import "./ModalConfirm.scss";
+import "./index.scss";
 
 export default function ModalConfirm({
   title,
@@ -28,7 +28,7 @@ export default function ModalConfirm({
 
         <div className="modal-confirm__buttons">
           <button
-            className="button--green"
+            className="button button--green"
             onClick={() => {
               setVisibleConfirm(false);
               confirmFunc();
@@ -38,7 +38,7 @@ export default function ModalConfirm({
           </button>
 
           <button
-            className="button--red"
+            className="button button--red"
             onClick={() => setVisibleConfirm(false)}
           >
             No

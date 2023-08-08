@@ -4,18 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { setClearStatus, setLoginUser } from "../../redux/slices/auth";
-import { getStatus } from "../../redux/selector/auth";
+import { setStatus } from "../../redux/slices/AppSlice";
+import { getStatus } from "../../redux/slices/AppSlice/appSelector";
 
 import { Input } from "../../components/UI";
 
 import { INPUT_ERR, ROUTE } from "../../constants";
 
-import { useFetching } from "../../hooks";
+import { useAxiosAuth } from "../../Hooks/useAxiosAuth";
 
-import { login } from "../../Api";
-
-import "./Login.scss";
+import "./index.scss";
 
 export default function Login() {
   const [mailOrPhone, setMailOrPhone] = useState("");
@@ -27,19 +25,12 @@ export default function Login() {
 
   const status = useSelector(getStatus);
 
-  const loginedUser = useFetching(async () => {
-    const response = await login({
-      mailOrPhone,
-      password,
-    });
-
-    dispatch(setLoginUser(response));
-  });
+  const { login } = useAxiosAuth();
 
   useEffect(() => {
     if (status) {
       toast(status, { toastId: 1 });
-      dispatch(setClearStatus());
+      dispatch(setStatus(null));
     }
   }, [dispatch, status]);
 
@@ -50,7 +41,7 @@ export default function Login() {
       return setPasswordErr(true);
     }
 
-    loginedUser();
+    login({ mailOrPhone, password });
     clearForm();
   }
 
@@ -92,11 +83,11 @@ export default function Login() {
         />
 
         <div className="login-form-buttons">
-          <button type="submit" className="button--green" onClick={submit}>
+          <button type="submit" className="button button--green" onClick={submit}>
             Login
           </button>
 
-          <button type="reset" className="button--red" onClick={clearForm}>
+          <button type="reset" className="button button--red" onClick={clearForm}>
             Reset
           </button>
         </div>

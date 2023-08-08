@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./Select.scss";
+
+import "./index.scss";
 
 export default function Select({
   options,
@@ -37,7 +38,8 @@ export default function Select({
               onClick={() => optionSelect(option)}
               className={`select__option ${
                 option === selectedOption ? "selected" : ""
-              }`}>
+              }`}
+            >
               {option}
             </li>
           ))}

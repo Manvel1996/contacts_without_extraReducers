@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 
 import { Loader } from "./UI";
 
-import { privateRoutes, publicRoutes } from "../router";
+import { privateRoutes, publicRoutes } from "../Router";
 
 import { ROUTE } from "../constants";
 
-import { getLoggedIn, getLoadingState } from "../redux/selector/auth";
+import {
+  getLoggedIn,
+  getLoadingState,
+} from "../redux/slices/AppSlice/appSelector";
 
 import { Error } from "../pages";
 

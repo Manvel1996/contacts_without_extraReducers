@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Pagination.scss";
+import "./index.scss";
 
 export default function Pagination({
   totalItems,

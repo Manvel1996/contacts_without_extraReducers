@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getLoggedIn } from "../../redux/selector/auth";
-import { setLogOut } from "../../redux/slices/auth";
+import { getLoggedIn } from "../../redux/slices/AppSlice/appSelector";
+import { setToken, setIsLoading, setStatus } from "../../redux/slices/AppSlice";
+import { setUser } from "../../redux/slices/AuthSlice";
+import { setContacts } from "../../redux/slices/ContactsSlice";
+import { setGroups } from "../../redux/slices/GroupsSlice";
 
 import { ROUTE, AUTH_TOKEN, ROUTE_PAGES } from "../../constants";
 
-import "./Header.scss";
+import "./index.scss";
 
 export default function Header() {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
@@ -37,7 +40,13 @@ export default function Header() {
   };
 
   function confirmFunc() {
-    dispatch(setLogOut());
+    dispatch(setToken(null));
+    dispatch(setIsLoading(false));
+    dispatch(setStatus(null));
+    dispatch(setContacts([]));
+    dispatch(setGroups([]));
+    dispatch(setUser(null));
+
     localStorage.removeItem(AUTH_TOKEN);
     toast("Уou are logged out");
     navigate(ROUTE.LOGIN);
@@ -63,7 +72,8 @@ export default function Header() {
         className={
           activeMobileMenu ? "mobile-menu mobile-menu--close" : "mobile-menu"
         }
-        onClick={() => setActiveMobileMenu(!activeMobileMenu)}>
+        onClick={() => setActiveMobileMenu(!activeMobileMenu)}
+      >
         <span />
       </div>
 

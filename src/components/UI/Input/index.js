@@ -1,5 +1,5 @@
 import React from "react";
-import "./Input.scss";
+import "./index.scss";
 
 export default function Input({
   label="",

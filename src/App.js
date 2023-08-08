@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,34 +9,27 @@ import AppRouter from "./components/AppRouter";
 
 import { AUTH_TOKEN, ROUTE } from "./constants";
 
-import { getMe } from "./Api";
+import { useAxiosAuth } from "./Hooks/useAxiosAuth";
 
-import { useFetching } from "./hooks";
-
-import { getLoggedIn } from "./redux/selector/auth";
-import { setUser } from "./redux/slices/auth";
+import { getLoggedIn } from "./redux/slices/AppSlice/appSelector";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
 export default function App() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isAuth = useSelector(getLoggedIn);
   const location = useLocation();
 
-  const isAuth = useSelector(getLoggedIn);
   const currentUrl = location.pathname;
 
-  const userInfo = useFetching(async () => {
-    const response = await getMe();
-    dispatch(setUser(response));
-  });
+  const { getMe } = useAxiosAuth();
 
   useEffect(() => {
     if (localStorage.getItem(AUTH_TOKEN)) {
-      userInfo();
+      getMe();
     }
-  }, [userInfo]);
+  }, []);
 
   useEffect(() => {
     if (

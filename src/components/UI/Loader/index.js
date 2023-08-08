@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Loader.scss";
+import "./index.scss";
 
 export default function Loader() {
   return <div className="lds-dual-ring"></div>;

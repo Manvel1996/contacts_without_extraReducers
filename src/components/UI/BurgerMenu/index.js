@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import "./BurgerMenu.scss";
+import "./index.scss";
 
 export default function BurgerMenu({
   menuHeader,

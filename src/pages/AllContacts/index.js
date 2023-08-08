@@ -2,16 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { useSelector } from "react-redux";
 
-import { List, Filter, Form } from "../../components/contact";
+import { List, Filter, Form } from "../../components/Contacts";
 import { Button, Modal, Pagination } from "../../components/UI";
 
 import { CONTACT_PAGE_GET_COUNT, CONTACT_GROUP } from "../../constants";
 
-import { getContacts, getContactsGroups } from "../../redux/selector/auth";
+import { getContacts } from "../../redux/slices/ContactsSlice/contactsSelector";
+import { getGroups } from "../../redux/slices/GroupsSlice/groupSelector";
 
-import { contactsFilter, paginationSlice } from "../../utils";
+import { contactsFilter, paginationSlice } from "../../Utils/helper";
 
-import "./AllContacts.scss";
+import "./index.scss";
 
 export default function AllContacts() {
   const [visible, setVisible] = useState(false);
@@ -20,17 +21,17 @@ export default function AllContacts() {
   const [search, setSearch] = useState("");
   const [editedContact, setEditedContact] = useState(null);
 
-  const contactsGroups = useSelector(getContactsGroups);
+  const contactsGroups = useSelector(getGroups);
   const contactsList = useSelector(getContacts);
 
-  const filtredContactsList = useMemo(
+  const filteredContactsList = useMemo(
     () => contactsFilter(contactsList, group, search),
     [contactsList, search, group]
   );
-  
+
   const contactsListSlice = useMemo(
-    () => paginationSlice(filtredContactsList, currentPage),
-    [filtredContactsList, currentPage]
+    () => paginationSlice(filteredContactsList, currentPage),
+    [filteredContactsList, currentPage]
   );
 
   function changeGroup(value) {
@@ -77,9 +78,9 @@ export default function AllContacts() {
         changeEditedContact={changeEditedContact}
       />
 
-      {filtredContactsList?.length !== 0 && (
+      {filteredContactsList?.length !== 0 && (
         <Pagination
-          totalItems={filtredContactsList?.length}
+          totalItems={filteredContactsList?.length}
           itemsPerPage={CONTACT_PAGE_GET_COUNT}
           pageChange={setCurrentPage}
           currentPage={currentPage}

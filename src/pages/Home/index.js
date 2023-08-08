@@ -2,16 +2,16 @@ import React, { useEffect, useState, useMemo } from "react";
 
 import { useSelector } from "react-redux";
 
-import { List, Form } from "../../components/contact";
+import { List, Form } from "../../components/Contacts";
 import { Modal, Pagination, Input } from "../../components/UI";
 
 import { CONTACT_PAGE_GET_COUNT } from "../../constants";
 
-import { getContacts } from "../../redux/selector/auth";
+import { getContacts } from "../../redux/slices/ContactsSlice/contactsSelector";
 
-import { favoriteContactsFilter, paginationSlice } from "../../utils";
+import { favoriteContactsFilter, paginationSlice } from "../../Utils/helper";
 
-import "./Home.scss";
+import "./index.scss";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
