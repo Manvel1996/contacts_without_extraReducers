@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { getStatus } from "../../../redux/slices/AppSlice/appSelector";
@@ -13,7 +12,6 @@ import {
   AUTH_GENDER,
   AUTH_TOKEN,
   AUTH_DEFAULT_IMG,
-  ROUTE,
   PHONE_START,
   VALID_EMAIL,
   VALID_PHONE,

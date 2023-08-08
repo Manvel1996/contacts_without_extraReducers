@@ -58,6 +58,7 @@ export default function AddGroup({ closeModal }) {
         err={groupErr}
         errText="The group must contain at least 2 characters and no more than 20"
       />
+
       <button type="submit" className="button button--green" onClick={submit}>
         Add group
       </button>

@@ -11,12 +11,9 @@ export const contactsSlice = createSlice({
     setContacts: (state, action) => {
       state.contacts = action.payload;
     },
-    setAddContact: (state, action) => {
-      state.contacts.push(action.payload);
-    },
   },
 });
 
-export const { setContacts, setAddContact } = contactsSlice.actions;
+export const { setContacts } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

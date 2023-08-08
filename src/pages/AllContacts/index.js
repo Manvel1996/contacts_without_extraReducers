@@ -34,6 +34,10 @@ export default function AllContacts() {
     [filteredContactsList, currentPage]
   );
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
   function changeGroup(value) {
     setGroup(value);
     setCurrentPage(1);
@@ -55,10 +59,6 @@ export default function AllContacts() {
     setEditedContact(null);
     setVisible(true);
   }
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [search]);
 
   return (
     <div className="all-contacts">
