@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getStatus } from "../../../redux/slices/AppSlice/appSelector";
-import { getUser } from "../../../redux/slices/AuthSlice/authSelector";
-import { setStatus } from "../../../redux/slices/AppSlice";
+import { getStatus } from "../../../redux/slices/App/Selector";
+import { getUser } from "../../../redux/slices/Auth/Selector";
+import { setStatus } from "../../../redux/slices/App";
 
 import { Input, Select } from "../../UI";
 

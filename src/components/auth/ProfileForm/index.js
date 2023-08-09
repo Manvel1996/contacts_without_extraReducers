@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getStatus } from "../../../redux/slices/AppSlice/appSelector";
-import { getUser } from "../../../redux/slices/AuthSlice/authSelector";
+import { getStatus } from "../../../redux/slices/App/Selector";
+import { getUser } from "../../../redux/slices/Auth/Selector";
 
 import { Input, Select } from "../../UI";
 

@@ -7,7 +7,7 @@ import { Modal, Pagination, Input } from "../../components/UI";
 
 import { CONTACT_PAGE_GET_COUNT } from "../../constants";
 
-import { getContacts } from "../../redux/slices/ContactsSlice/contactsSelector";
+import { getContacts } from "../../redux/slices/Contacts/Selector";
 
 import { favoriteContactsFilter, paginationSlice } from "../../Utils/helper";
 

@@ -11,7 +11,7 @@ import { ROUTE } from "../constants";
 import {
   getLoggedIn,
   getLoadingState,
-} from "../redux/slices/AppSlice/appSelector";
+} from "../redux/slices/App/Selector";
 
 import { Error } from "../pages";
 

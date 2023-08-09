@@ -11,7 +11,7 @@ import { AUTH_TOKEN, ROUTE } from "./constants";
 
 import { useAxiosAuth } from "./Hooks/useAxiosAuth";
 
-import { getLoggedIn } from "./redux/slices/AppSlice/appSelector";
+import { getLoggedIn } from "./redux/slices/App/Selector";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";

@@ -13,8 +13,8 @@ import {
   textControl,
 } from "../../../Utils/controller";
 
-import { getStatus } from "../../../redux/slices/AppSlice/appSelector";
-import { getGroups } from "../../../redux/slices/GroupsSlice/groupSelector";
+import { getStatus } from "../../../redux/slices/App/Selector";
+import { getGroups } from "../../../redux/slices/Groups/Selector";
 
 import {
   CONTACT_STATUS,

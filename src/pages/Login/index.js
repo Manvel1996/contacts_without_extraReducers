@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { setStatus } from "../../redux/slices/AppSlice";
-import { getStatus } from "../../redux/slices/AppSlice/appSelector";
+import { setStatus } from "../../redux/slices/App";
+import { getStatus } from "../../redux/slices/App/Selector";
 
 import { Input } from "../../components/UI";
 
@@ -83,11 +83,19 @@ export default function Login() {
         />
 
         <div className="login-form-buttons">
-          <button type="submit" className="button button--green" onClick={submit}>
+          <button
+            type="submit"
+            className="button button--green"
+            onClick={submit}
+          >
             Login
           </button>
 
-          <button type="reset" className="button button--red" onClick={clearForm}>
+          <button
+            type="reset"
+            className="button button--red"
+            onClick={clearForm}
+          >
             Reset
           </button>
         </div>

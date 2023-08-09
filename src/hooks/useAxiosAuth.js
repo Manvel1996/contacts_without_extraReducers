@@ -1,10 +1,10 @@
 import bcrypt from "bcryptjs";
 import { useDispatch } from "react-redux";
 
-import { setIsLoading, setStatus, setToken } from "../redux/slices/AppSlice";
-import { setUser } from "../redux/slices/AuthSlice";
-import { setContacts } from "../redux/slices/ContactsSlice";
-import { setGroups } from "../redux/slices/GroupsSlice";
+import { setIsLoading, setStatus, setToken } from "../redux/slices/App";
+import { setUser } from "../redux/slices/Auth";
+import { setContacts } from "../redux/slices/Contacts";
+import { setGroups } from "../redux/slices/Groups";
 
 import { AUTH_TOKEN, CONTACT_GROUP } from "../constants";
 

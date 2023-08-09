@@ -7,8 +7,8 @@ import { Button, Modal, Pagination } from "../../components/UI";
 
 import { CONTACT_PAGE_GET_COUNT, CONTACT_GROUP } from "../../constants";
 
-import { getContacts } from "../../redux/slices/ContactsSlice/contactsSelector";
-import { getGroups } from "../../redux/slices/GroupsSlice/groupSelector";
+import { getContacts } from "../../redux/slices/Contacts/Selector";
+import { getGroups } from "../../redux/slices/Groups/Selector";
 
 import { contactsFilter, paginationSlice } from "../../Utils/helper";
 

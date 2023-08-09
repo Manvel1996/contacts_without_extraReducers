@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getStatus } from "../../../redux/slices/AppSlice/appSelector";
+import { getStatus } from "../../../redux/slices/App/Selector";
 
 import { Input } from "../../UI";
 

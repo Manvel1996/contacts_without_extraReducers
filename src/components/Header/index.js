@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getLoggedIn } from "../../redux/slices/AppSlice/appSelector";
-import { setToken, setIsLoading, setStatus } from "../../redux/slices/AppSlice";
-import { setUser } from "../../redux/slices/AuthSlice";
-import { setContacts } from "../../redux/slices/ContactsSlice";
-import { setGroups } from "../../redux/slices/GroupsSlice";
+import { getLoggedIn } from "../../redux/slices/App/Selector";
+import { setToken, setIsLoading, setStatus } from "../../redux/slices/App";
+import { setUser } from "../../redux/slices/Auth";
+import { setContacts } from "../../redux/slices/Contacts";
+import { setGroups } from "../../redux/slices/Groups";
 
 import { ROUTE, AUTH_TOKEN, ROUTE_PAGES } from "../../constants";
 
