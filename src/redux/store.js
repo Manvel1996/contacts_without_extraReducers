@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import authReducer from "./slices/AuthSlice";
-import appReducer from "./slices/AppSlice";
-import contactsReducer from "./slices/ContactsSlice";
-import groupsReducer from "./slices/GroupsSlice";
+import authReducer from "./slices/Auth";
+import appReducer from "./slices/App";
+import contactsReducer from "./slices/Contacts";
+import groupsReducer from "./slices/Groups";
 
 export const store = configureStore({
   reducer: {

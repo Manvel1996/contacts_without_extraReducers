@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { setIsLoading, setStatus } from "../redux/slices/AppSlice";
+import { setIsLoading, setStatus } from "../redux/slices/App";
 
 import { useAxios } from "./useAxios";
 
