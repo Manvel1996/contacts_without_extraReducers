@@ -1,4 +1,4 @@
-import { VALID_EMAIL, VALID_PHONE, VALID_PHOTO_URL } from "../constants";
+import { VALID_EMAIL, VALID_PHONE, VALID_PHOTO_URL } from "../Constants";
 
 export function textControl(e, setText, setTextErr) {
   setText(e.target.value.trim());
@@ -23,9 +23,9 @@ export function emailControl(e, setEmail, setEmailErr) {
 }
 
 export function phoneControl(e, setPhone, setPhoneErr) {
-  setPhone(e.target.value.trimLeft());
+  setPhone(e.target.value);
 
-  if (VALID_PHONE.test(e.target.value.trimLeft())) {
+  if (VALID_PHONE.test(e.target.value)) {
     setPhoneErr(false);
   } else setPhoneErr(true);
 }

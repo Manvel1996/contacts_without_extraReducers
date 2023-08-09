@@ -1,4 +1,4 @@
-import { CONTACT_GROUP, CONTACT_PAGE_GET_COUNT } from "../constants";
+import { CONTACT_GROUP, CONTACT_PAGE_GET_COUNT } from "../Constants";
 
 export function contactsFilter(contactsList, group, search) {
   if (group === CONTACT_GROUP.ALL && search.trim()?.length === 0) {
@@ -46,7 +46,7 @@ export function favoriteContactsFilter(contactsList, search) {
   });
 }
 
-export  function paginationSlice(contactsList, currentPage) {
+export function paginationSlice(contactsList, currentPage) {
   const sliceStart = CONTACT_PAGE_GET_COUNT * (currentPage - 1);
   const contactsListSlice = contactsList?.slice(
     sliceStart,

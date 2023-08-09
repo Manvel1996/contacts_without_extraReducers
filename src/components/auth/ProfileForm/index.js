@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getStatus } from "../../../redux/slices/App/Selector";
-import { getUser } from "../../../redux/slices/Auth/Selector";
+import { getStatus } from "../../../redux/slices/App/selector";
+import { getUser } from "../../../redux/slices/Auth/selector";
 
 import { Input, Select } from "../../UI";
 
@@ -17,7 +17,7 @@ import {
   VALID_PHONE,
   VALID_PHOTO_URL,
   INPUT_ERR,
-} from "../../../constants";
+} from "../../../Constants";
 
 import {
   emailControl,
@@ -129,7 +129,7 @@ export default function AuthForm() {
       !VALID_PHONE.test(phone) ||
       password?.length < 5 ||
       (newPassword?.length > 0 && newPassword?.length < 5) ||
-      (newPassword !== repeatPassword) ||
+      newPassword !== repeatPassword ||
       (photoUrl?.length > 0 && !VALID_PHOTO_URL.test(photoUrl))
     ) {
       return;

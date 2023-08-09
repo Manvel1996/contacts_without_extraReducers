@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import { List, Form } from "../../components/Contacts";
 import { Modal, Pagination, Input } from "../../components/UI";
 
-import { CONTACT_PAGE_GET_COUNT } from "../../constants";
+import { CONTACT_PAGE_GET_COUNT } from "../../Constants";
 
-import { getContacts } from "../../redux/slices/Contacts/Selector";
+import { getContacts } from "../../redux/slices/Contacts/selector";
 
 import { favoriteContactsFilter, paginationSlice } from "../../Utils/helper";
 

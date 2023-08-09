@@ -7,11 +7,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import AppRouter from "./components/AppRouter";
 
-import { AUTH_TOKEN, ROUTE } from "./constants";
+import { AUTH_TOKEN, ROUTE } from "./Constants";
 
 import { useAxiosAuth } from "./Hooks/useAxiosAuth";
 
-import { getLoggedIn } from "./redux/slices/App/Selector";
+import { getLoggedIn } from "./redux/slices/App/selector";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";

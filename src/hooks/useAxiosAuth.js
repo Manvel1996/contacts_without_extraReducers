@@ -6,7 +6,7 @@ import { setUser } from "../redux/slices/Auth";
 import { setContacts } from "../redux/slices/Contacts";
 import { setGroups } from "../redux/slices/Groups";
 
-import { AUTH_TOKEN, CONTACT_GROUP } from "../constants";
+import { AUTH_TOKEN, CONTACT_GROUP } from "../Constants";
 
 import { useAxios } from "./useAxios";
 

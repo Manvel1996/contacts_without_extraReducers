@@ -13,8 +13,8 @@ import {
   textControl,
 } from "../../../Utils/controller";
 
-import { getStatus } from "../../../redux/slices/App/Selector";
-import { getGroups } from "../../../redux/slices/Groups/Selector";
+import { getStatus } from "../../../redux/slices/App/selector";
+import { getGroups } from "../../../redux/slices/Groups/selector";
 
 import {
   CONTACT_STATUS,
@@ -25,7 +25,7 @@ import {
   VALID_PHONE,
   VALID_PHOTO_URL,
   INPUT_ERR,
-} from "../../../constants";
+} from "../../../Constants";
 
 import { useAxiosAuth } from "../../../Hooks/useAxiosAuth";
 import { useAxiosContacts } from "../../../Hooks/useAxiosContacts";

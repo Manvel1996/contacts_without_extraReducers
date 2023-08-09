@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { setStatus } from "../../redux/slices/App";
-import { getStatus } from "../../redux/slices/App/Selector";
+import { getStatus } from "../../redux/slices/App/selector";
 
 import { Input } from "../../components/UI";
 
-import { INPUT_ERR, ROUTE } from "../../constants";
+import { INPUT_ERR, ROUTE } from "../../Constants";
 
 import { useAxiosAuth } from "../../Hooks/useAxiosAuth";
 

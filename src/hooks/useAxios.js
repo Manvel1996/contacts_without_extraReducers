@@ -1,6 +1,6 @@
 import instance from "axios";
 
-import { AUTH_TOKEN, BASE_URL, CURRENT_API } from "../constants";
+import { AUTH_TOKEN, BASE_URL, CURRENT_API } from "../Constants";
 
 const axios = instance.create({
   baseURL: BASE_URL,

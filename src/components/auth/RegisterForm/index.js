@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getStatus } from "../../../redux/slices/App/Selector";
-import { getUser } from "../../../redux/slices/Auth/Selector";
+import { getStatus } from "../../../redux/slices/App/selector";
+import { getUser } from "../../../redux/slices/Auth/selector";
 import { setStatus } from "../../../redux/slices/App";
 
 import { Input, Select } from "../../UI";
@@ -19,7 +19,7 @@ import {
   VALID_PHONE,
   VALID_PHOTO_URL,
   INPUT_ERR,
-} from "../../../constants";
+} from "../../../Constants";
 
 import {
   emailControl,

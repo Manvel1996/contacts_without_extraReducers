@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { List, Filter, Form, AddGroup } from "../../components/Contacts";
 import { Button, Modal, Pagination } from "../../components/UI";
 
-import { CONTACT_PAGE_GET_COUNT, CONTACT_GROUP } from "../../constants";
+import { CONTACT_PAGE_GET_COUNT, CONTACT_GROUP } from "../../Constants";
 
-import { getContacts } from "../../redux/slices/Contacts/Selector";
-import { getGroups } from "../../redux/slices/Groups/Selector";
+import { getContacts } from "../../redux/slices/Contacts/selector";
+import { getGroups } from "../../redux/slices/Groups/selector";
 
 import { contactsFilter, paginationSlice } from "../../Utils/helper";
 

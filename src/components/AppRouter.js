@@ -6,12 +6,9 @@ import { Loader } from "./UI";
 
 import { privateRoutes, publicRoutes } from "../Router";
 
-import { ROUTE } from "../constants";
+import { ROUTE } from "../Constants";
 
-import {
-  getLoggedIn,
-  getLoadingState,
-} from "../redux/slices/App/Selector";
+import { getLoggedIn, getLoadingState } from "../redux/slices/App/selector";
 
 import { Error } from "../pages";
 

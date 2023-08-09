@@ -4,7 +4,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 import { ConfirmModal } from "../../UI";
 
-import { CONTACT_STATUS, AUTH_DEFAULT_IMG } from "../../../constants";
+import { CONTACT_STATUS, AUTH_DEFAULT_IMG } from "../../../Constants";
 
 import { useAxiosContacts } from "../../../Hooks/useAxiosContacts";
 
